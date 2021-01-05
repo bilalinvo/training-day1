@@ -1,0 +1,4 @@
+- Clone Project
+- Run npm install
+- Open terminal in the project
+- Run node app.js
