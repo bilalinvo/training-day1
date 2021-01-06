@@ -1,0 +1,23 @@
+{
+  "name": "react-training",
+  "version": "1.0.0",
+  "description": "- Clone Project - Run npm install - Open terminal in the project - Run node app.js",
+  "main": "app.js",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bilalinvo/training-day1.git"
+  },
+  "author": "Bilal Usman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bilalinvo/training-day1/issues"
+  },
+  "homepage": "https://github.com/bilalinvo/training-day1#readme"
+}
