@@ -5,8 +5,8 @@ const rel_path = require('path');
 
 let IO = (() => {
 
-  const file_path = path + 'uploads/os-info.txt';
-  const dir = path + 'uploads';
+  const dir = os.homedir + path;
+  const file_path = dir + 'os-info.txt';
 
   // Read OS details
   const readOSDetails = () => {
