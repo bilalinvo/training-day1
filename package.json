@@ -6,9 +6,22 @@
   "dependencies": {
     "dotenv": "^8.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "husky": "^4.3.6",
+    "prettier": "^2.2.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "prettier": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -19,5 +32,10 @@
   "bugs": {
     "url": "https://github.com/bilalinvo/training-day1/issues"
   },
-  "homepage": "https://github.com/bilalinvo/training-day1#readme"
+  "homepage": "https://github.com/bilalinvo/training-day1#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint & npm run prettier"
+    }
+  }
 }

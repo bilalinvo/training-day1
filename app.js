@@ -1,61 +1,58 @@
-const fs = require("fs");
-const os = require("os");
-const path = require("dotenv").config().parsed.FILE_PATH;
-const rel_path = require('path');
+const fs = require('fs');
+const os = require('os');
+const path = require('dotenv').config().parsed.FILE_PATH;
 
-let IO = (() => {
+const dir = os.homedir + path;
+const filePath = `${dir}os-info.txt`;
 
-  const dir = os.homedir + path;
-  const file_path = dir + 'os-info.txt';
+// Read OS details
+const readOSDetails = () => {
+  fs.readFile(filePath, (err, buf) => {
+    if (err) throw err;
+    console.log(buf.toString().replace(/,\s*$/, ''));
+  });
+};
 
-  // Read OS details
-  const readOSDetails = () => {
-    fs.readFile(file_path, (err, buf) => {
+// If file exist
+const isFileExist = () => {
+  try {
+    fs.accessSync(filePath, fs.F_OK);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
+// Write OS details
+const writeOSDetails = () => {
+  const osInfo = `${JSON.stringify(os.userInfo())},`;
+  if (isFileExist()) {
+    // Check if file exist
+    fs.appendFile(filePath, osInfo, (err) => {
       if (err) throw err;
-      console.log(buf.toString().replace(/,\s*$/, ""));
+      console.log('OS info saved successfully!');
     });
-  };
+  } else {
+    // Create and write OS info
+    fs.writeFile(filePath, osInfo, (err) => {
+      if (err) throw err;
+      console.log('OS info saved successfully!');
+    });
+  }
+};
 
-  // Write OS details
-  const writeOSDetails = () => {
-    const os_info = JSON.stringify(os.userInfo()) + ',';
-    if (isFileExist()) { // Check if file exist
-      fs.appendFile(file_path, os_info, (err) => {
-        if (err) throw err;
-        console.log("OS info saved successfully!");
-      });
-    } else { // Create and write OS info
-      fs.writeFile(file_path, os_info, (err) => {
-        if (err) throw err;
-        console.log("OS info saved successfully!");
-      });
-    }
-  };
+// Create directory for folder
+const createDirectory = () => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+};
 
-  // If file exist
-  const isFileExist = () => {
-    try {
-      fs.accessSync(file_path, fs.F_OK);
-      return true;
-    } catch (err) {
-      return false;
-    }
-  };
+// Display details
+const displayOSDetails = () => {
+  createDirectory();
+  writeOSDetails();
+  readOSDetails();
+};
 
-  // Create directory for folder
-  const createDirectory = () => {
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
-    }
-  };
-
-  // Display details
-  const displayOSDetails = () => {
-    createDirectory();
-    writeOSDetails();
-    readOSDetails();
-  };
-
-  return displayOSDetails();
-
-})();
+displayOSDetails();
