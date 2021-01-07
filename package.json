@@ -4,7 +4,8 @@
   "description": "- Clone Project - Run npm install - Open terminal in the project - Run node app.js",
   "main": "app.js",
   "dependencies": {
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "fs-extra": "^9.0.1"
   },
   "devDependencies": {
     "eslint": "^7.17.0",
@@ -35,7 +36,7 @@
   "homepage": "https://github.com/bilalinvo/training-day1#readme",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint & npm run prettier"
+      "pre-commit": "npm run lint & npm run prettier && git add ."
     }
   }
 }

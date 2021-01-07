@@ -1,58 +1,29 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const os = require('os');
 const path = require('dotenv').config().parsed.FILE_PATH;
 
 const dir = os.homedir + path;
 const filePath = `${dir}os-info.txt`;
 
-// Read OS details
-const readOSDetails = () => {
-  fs.readFile(filePath, (err, buf) => {
-    if (err) throw err;
-    console.log(buf.toString().replace(/,\s*$/, ''));
-  });
-};
-
-// If file exist
-const isFileExist = () => {
+/**
+ * Make dir, write and read info
+ */
+const displayOSInfo = async () => {
   try {
-    fs.accessSync(filePath, fs.F_OK);
-    return true;
+    // Ensure directory is available
+    await fs.ensureDir(dir);
+
+    // Write OS info
+    await fs.writeJson(filePath, os.userInfo());
+
+    // Read OS info
+    fs.readJson(filePath, (err, infoObj) => {
+      if (err) console.error(err);
+      console.table(infoObj);
+    });
   } catch (err) {
-    return false;
+    throw new Error(err);
   }
 };
 
-// Write OS details
-const writeOSDetails = () => {
-  const osInfo = `${JSON.stringify(os.userInfo())},`;
-  if (isFileExist()) {
-    // Check if file exist
-    fs.appendFile(filePath, osInfo, (err) => {
-      if (err) throw err;
-      console.log('OS info saved successfully!');
-    });
-  } else {
-    // Create and write OS info
-    fs.writeFile(filePath, osInfo, (err) => {
-      if (err) throw err;
-      console.log('OS info saved successfully!');
-    });
-  }
-};
-
-// Create directory for folder
-const createDirectory = () => {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
-  }
-};
-
-// Display details
-const displayOSDetails = () => {
-  createDirectory();
-  writeOSDetails();
-  readOSDetails();
-};
-
-displayOSDetails();
+displayOSInfo();
