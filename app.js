@@ -10,11 +10,15 @@ const filePath = `${dir}os-info.txt`;
  */
 const displayOSInfo = async () => {
   try {
-    // Ensure directory is available
+    // Ensure directory
     await fs.ensureDir(dir);
+
+    // Ensure File
+    await fs.ensureFile(filePath);
 
     // Write OS info
     await fs.writeJson(filePath, os.userInfo());
+    console.log('Info saved successfully!');
 
     // Read OS info
     fs.readJson(filePath, (err, infoObj) => {
